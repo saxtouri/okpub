@@ -35,9 +35,18 @@ class KeyAPI(Client):
         compute_endpoint = auth.get_endpoint_url(
             cyclades.CycladesComputeClient.service_type)
         endpoint, _ = compute_endpoint.split('/compute')
-        return utils.path4url(endpoint, 'userdata', 'keys')
+        return endpoint
 
+    def list_public_keys(self):
+        """List all public keys"""
+        self.set_header('Content-Type', 'application/json')
+        path = utils.path4url('userdata', 'keys')
+        r = self.get(path, success=(200, ))
+        return r.json
 
-
-# utils.https.patch_ignore_ssl()
-# print KeyAPI.get_endpoint_url('https://accounts.okeanos.grnet.gr/identity/v2.0')
+    def get_public_key(self, key_id):
+        """Get the full information of a public key"""
+        self.set_header('Content-Type', 'application/json')
+        path = utils.path4url('userdata', 'keys', key_id)
+        r = self.get(path, success=(200, ))
+        return r.json
