@@ -61,7 +61,7 @@ setup(
     include_package_data=True,
     entry_points={
         'console_scripts': [
-            # 'okpub = okpub.cli:main',
+            'okpub = okpub.cli:main',
         ]
     },
     install_requires=requires
